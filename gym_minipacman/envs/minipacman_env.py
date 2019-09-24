@@ -265,6 +265,10 @@ class MiniPacman(gym.Env):
       self._init_level(self.level + 1)
 
   def _kill_ghost(self, ghost_index):
+    if len(self.world_state['ghosts']) == 0:
+      print('Warning: missing ghost bug, restarting level')
+      self._init_level(self.level + 1)
+      return
     self.world_state['ghosts'].pop(ghost_index)
     self.reward += self.ghost_hunt_reward
     if (not self.world_state['ghosts']) and self.all_ghosts_terminate:
